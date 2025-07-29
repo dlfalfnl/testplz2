@@ -16,10 +16,13 @@ jobs:
     - name: List files
       run: dir
 
+    - name: Zip JAR for deployment
+      run: Compress-Archive -Path app.jar -DestinationPath app.zip
+
     - name: Deploy prebuilt JAR to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
         app-name: ben-ora-java-client2
         slot-name: production
         publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-        package: app.jar
+        package: app.zip
