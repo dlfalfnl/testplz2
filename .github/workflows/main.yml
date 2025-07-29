@@ -1,4 +1,4 @@
-name: Deploy Prebuilt Java JAR to Azure
+name: Deploy Prebuilt Java JAR to Azure 
 
 on:
   push:
@@ -17,7 +17,9 @@ jobs:
       run: dir
 
     - name: Zip JAR for deployment
-      run: Compress-Archive -Path app.jar -DestinationPath app.zip
+      run: |
+        if (Test-Path "app.zip") { Remove-Item "app.zip" -Force }
+        Compress-Archive -Path app.jar -DestinationPath app.zip
 
     - name: Deploy prebuilt JAR to Azure Web App
       uses: azure/webapps-deploy@v2
